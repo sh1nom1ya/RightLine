@@ -1,0 +1,43 @@
+# backend
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+project.lock.json
+project.assets.json
+*.pdb
+*.cache
+*.tmp
+*.log
+.vs/
+.vscode/
+
+# nuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# frontend
+node_modules/
+build/
+dist/
+.env
+.env.*.local
+coverage/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# editor
+.idea/
+*.swp
+*.sublime*
+
+# OS
+.DS_Store
+Thumbs.db
