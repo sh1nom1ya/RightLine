@@ -1,0 +1,33 @@
+.request-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.request-form textarea {
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    resize: none;
+    background-color: #cce7ff;
+    font-family: inherit;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.request-form button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    background-color: #5d89a6;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 300ms all ease;
+}
+
+.request-form button:hover {
+    background-color: #061388;
+}

@@ -1,0 +1,97 @@
+.card {
+    width: 39%;
+    height: 25rem;
+    min-width: 320px;
+    border-radius: 40px;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0; /* на случай если inline-стиль не сработает */
+}
+
+.card-header {
+    width: 100%;
+    padding: 20px 20px 0px 20px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #1a1a1a;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 4rem;
+    padding: 20px;
+    flex: 1;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.card-info p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.admin-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.edit-btn,
+.details-btn {
+    background-color: #567ea2;
+    color: white;
+    padding: 20px 85px;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: 0;
+    transition: all 300ms ease;
+}
+
+.edit-btn:hover,
+.details-btn:hover {
+    background-color: #061388;
+}
+
+.delete-btn {
+    background-color: #9c2b2b;
+    padding: 18px 18px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.delete-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.card-img {
+    max-width: 200px;
+    max-height: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
