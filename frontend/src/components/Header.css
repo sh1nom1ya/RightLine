@@ -16,8 +16,9 @@ nav a {
 
 .logo {
     height: 40px;
-    margin-left: 380px;
-    margin-right: 600px;
+    margin-left: 360px;
+    margin-right: 620px;
+    -webkit-user-drag: none;
 }
 
 .profile {

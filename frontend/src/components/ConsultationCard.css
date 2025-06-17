@@ -1,0 +1,80 @@
+.consultation-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 20px 30px;
+    width: 100%;
+    max-width: 1400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.consultation-card h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.message {
+    font-size: 16px;
+    margin: 0;
+}
+
+.contact-box {
+    display: inline-flex;
+    gap: 16px;
+    background-color: #e0e7f1;
+    color: #2f4057;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    width: fit-content;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.accept-btn,
+.decline-btn {
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.accept-btn {
+    background-color: #00c1c9;
+    color: white;
+}
+
+.decline-btn {
+    background-color: #964c4c;
+    color: white;
+}
+
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.contact-box {
+    display: flex;
+    gap: 20px;
+    background-color: #e0e7f1;
+    color: #2f4057;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    flex-wrap: wrap;
+}
