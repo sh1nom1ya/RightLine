@@ -76,6 +76,11 @@ if (app.Environment.IsDevelopment())
 
 var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Images");
 
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(uploadsPath),
