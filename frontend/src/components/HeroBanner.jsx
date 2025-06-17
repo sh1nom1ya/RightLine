@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./HeroBanner.css";
-import bannerImage from "/Users/daniilvitkov/WebstormProjects/frontend/src/assets/banner.png";
+import bannerImage from "../assets/banner.png";
 import Modal from "./Modal";
 import RequestForm from "./RequestForm";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./ServiceCard.css";
-import trashIcon from "/Users/daniilvitkov/WebstormProjects/frontend/src/assets/trash.png";
+import trashIcon from "../assets/trash.png";
 
 const colors = ["#05BDC9", "#FFFFFF", "#FFFFFF", "#0C8FF8"];
 const textColors = ["#FFFFFF", "#05BDC9", "#0C8FF8", "#FFFFFF"];

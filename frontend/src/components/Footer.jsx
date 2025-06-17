@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "/Users/daniilvitkov/WebstormProjects/frontend/src/assets/logof.png";
+import logo from "../assets/logof.png";
 import "./Footer.css";
 
 const Footer = () => {

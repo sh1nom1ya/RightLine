@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
-import logo from "/Users/daniilvitkov/WebstormProjects/frontend/src/assets/logo.png";
-import profileIcon from "/Users/daniilvitkov/WebstormProjects/frontend/src/assets/profile.png";
+import logo from "../assets/logo.png";
+import profileIcon from "../assets/profile.png";
 
 const Header = () => {
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 import HeroBanner from "../components/HeroBanner";
 import ServiceCard from "../components/ServiceCard";
-import cardphoto from "/Users/daniilvitkov/WebstormProjects/frontend/src/assets/card1.jpg";
+import cardphoto from "../assets/card1.jpg";
 
 const services = [
     {

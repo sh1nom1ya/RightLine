@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import ServiceCard from "../components/ServiceCard";
 import EditForm from "../components/EditForm";
 import Modal from "../components/Modal";
-import cardphoto from "/Users/daniilvitkov/WebstormProjects/frontend/src/assets/card1.jpg";
+import cardphoto from "../assets/card1.jpg";
 
 const services = [
     {
