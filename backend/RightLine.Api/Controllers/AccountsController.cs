@@ -158,4 +158,34 @@ public class AccountsController(
 
         return Ok(orders);
     }
+    
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetAllOrders()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = await userManager.FindByIdAsync(userId);
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized();
+        }
+        
+        var orders = await db.Orders
+            .Where(o => o.UserId == userId)
+            .Include(o => o.Product)              
+            .Select(o => new ProfileOrderForAdminDto()
+            {
+                Code = o.Code,
+                Title = o.Product.Title,
+                CreatedAt = o.CreatedAt,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            })
+            .ToListAsync();
+
+        return Ok(orders);
+    }
 }
