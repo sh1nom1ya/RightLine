@@ -19,8 +19,8 @@ const ServiceDetailsContent = ({ data }) => {
                 <h2>
                     {data.important || "Важная информация о решении будет добавлена позже."}
                 </h2>
-                <button className="order-btn">Заказать</button>
             </div>
+            <button className="order-btn">Заказать</button>
         </div>
     );
 };
