@@ -4,9 +4,7 @@
     gap: 40px;
     padding: 40px;
     background-color: #e6f3ff;
-    min-height: 680px;
-    margin-top: 12px;
-    margin-bottom: 16px;
+    min-height: 86vh;
 }
 
 .profile-left,
@@ -16,6 +14,7 @@
     padding: 30px;
     flex: 1;
     max-width: 680px;
+    max-height: 700px;
     color: white;
     display: flex;
     flex-direction: column;
@@ -82,7 +81,7 @@ input {
 }
 
 .order-item {
-    background-color: #0094ff;
+    background-color: #ffffff32;
     border-radius: 12px;
     padding: 14px 20px 20px;
     display: flex;

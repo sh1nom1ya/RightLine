@@ -10,6 +10,11 @@
     display: flex;
     flex-direction: column;
     background-color: #f0f0f0; /* на случай если inline-стиль не сработает */
+    transition: all 300ms ease;
+}
+
+.card:hover {
+    transform: scale(1.01);
 }
 
 .card-header {
