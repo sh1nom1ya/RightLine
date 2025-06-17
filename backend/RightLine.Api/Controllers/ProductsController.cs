@@ -40,7 +40,7 @@ public class ProductsController(
 
         if (imageFile != null && imageFile.Length > 0)
         {
-            var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "images");
+            var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Images");
             Directory.CreateDirectory(uploadDir); 
 
             var uniqueName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
@@ -51,7 +51,7 @@ public class ProductsController(
                 await imageFile.CopyToAsync(stream, ct);
             }
 
-            imageUrl = $"/uploads/images/{uniqueName}";
+            imageUrl = $"/Uploads/Images/{uniqueName}";
         }
 
         var product = new Product
@@ -98,7 +98,7 @@ public class ProductsController(
                     System.IO.File.Delete(oldImagePath);
             }
 
-            var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "images");
+            var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Images");
             Directory.CreateDirectory(uploadDir);
 
             var uniqueName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
@@ -107,7 +107,7 @@ public class ProductsController(
             await using var stream = new FileStream(filePath, FileMode.Create);
             await imageFile.CopyToAsync(stream, ct);
 
-            product.ImagePath = $"/uploads/images/{uniqueName}";
+            product.ImagePath = $"/Uploads/Images/{uniqueName}";
         }
 
         await db.SaveChangesAsync(ct);
