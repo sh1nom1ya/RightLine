@@ -21,6 +21,6 @@ public class AppDbContext(IConfiguration configuration) : IdentityDbContext<User
     }
     
     public DbSet<Product> Products { get; set; }
-    public DbSet<Consultation> Conferences { get; set; }
+    public DbSet<Consultation> Consultations { get; set; }
     public DbSet<Order> Orders { get; set; }
 }
