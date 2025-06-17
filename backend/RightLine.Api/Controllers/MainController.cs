@@ -48,4 +48,10 @@ public class MainController : ControllerBase
     //
     //     return Ok(product);
     // }
+    
+    //GetAllProducts
+    
+    //GetDetails
+    
+    //MakingOrder
 }
