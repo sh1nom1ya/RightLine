@@ -7,17 +7,26 @@ import profileIcon from "../assets/profile.png";
 const Header = () => {
     return (
         <header className="header">
-            <nav>
-                <Link to="/product">Продукты</Link>
-                <Link to="/consultations">Консультации</Link>
-            </nav>
-            <Link to="/">
-                <img src={logo} alt="Right Line" className="logo" />
-            </Link>
-            <Link to="/profile">
-                <img src={profileIcon} alt="Профиль" className="profile" />
-            </Link>
+            <div className="nav-block">
+                <nav>
+                    <Link to="/product">Продукты</Link>
+                    <Link to="/consultations">Консультации</Link>
+                </nav>
+            </div>
+
+            <div className="logo-block">
+                <Link to="/">
+                    <img src={logo} alt="Right Line" className="logo" />
+                </Link>
+            </div>
+
+            <div className="profile-block">
+                <Link to="/profile">
+                    <img src={profileIcon} alt="Профиль" className="profile" />
+                </Link>
+            </div>
         </header>
+
     );
 };
 

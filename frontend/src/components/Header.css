@@ -1,17 +1,37 @@
 .header {
     display: flex;
-    /*justify-content: space-around;*/
-    /*gap: 500px;*/
     align-items: center;
-    /*padding: 15px 100px;*/
-    padding: 15px 10px 15px 140px;
+    justify-content: space-between;
     background-color: white;
+    padding: 15px 145px;
+}
+
+.nav-block,
+.logo-block,
+.profile-block {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.nav-block {
+    justify-content: flex-start;
+}
+
+.logo-block {
+    justify-content: center;
+}
+
+.profile-block {
+    justify-content: flex-end;
 }
 
 nav a {
     margin-right: 20px;
     font-weight: 500;
     font-size: 16px;
+    text-decoration: none;
+    color: black;
 }
 
 nav a:hover {
@@ -21,8 +41,6 @@ nav a:hover {
 
 .logo {
     height: 40px;
-    margin-left: 360px;
-    margin-right: 620px;
     -webkit-user-drag: none;
 }
 
