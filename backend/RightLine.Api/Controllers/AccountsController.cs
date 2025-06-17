@@ -1,9 +1,13 @@
+using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RightLine.Api.Dtos;
 using RightLine.Api.Dtos.Auth;
 using RightLine.Api.Jwt;
+using RightLine.DataAccess;
 using RightLine.DataAccess.Models;
 
 namespace RightLine.Api.Controllers;
@@ -14,7 +18,9 @@ public class AccountsController(
     UserManager<User> userManager,
     IMapper mapper,
     JwtHandler jwtHandler,
-    ILogger<AccountsController> logger) : Controller
+    ILogger<AccountsController> logger,
+    AppDbContext db
+    ) : Controller
 {
     [HttpPost]
     public async Task<IActionResult> Registrate([FromBody] UserRegistrationDto? userRegistrationDto)
@@ -66,9 +72,90 @@ public class AccountsController(
             IsAuthenticated = true,
             Token = token
         });
+    }
+    
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetProfile()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized();
+        }
+
+        var user = await userManager.FindByIdAsync(userId);
+
+        if (user == null)
+        {
+            return NotFound("Пользователь не найден");
+        }
+
+        var profileDto = mapper.Map<ProfileDto>(user);
+
+        return Ok(profileDto);
+    }
+    
+    [HttpPut]
+    [Authorize]
+    public async Task<IActionResult> UpdateProfile([FromBody] ProfileDto? profileDto)
+    {
+        if (profileDto is null)
+        {
+            return BadRequest("Некорректные данные");
+        }
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = await userManager.FindByIdAsync(userId);
+
+        if (user is null)
+        {
+            return NotFound("Пользователь не найден");
+        }
+
+        user.FirstName = profileDto.FirstName ?? user.FirstName;
+        user.LastName = profileDto.LastName ?? user.LastName;
+        user.Email = profileDto.Email ?? user.Email;
+        user.PhoneNumber = profileDto.PhoneNumber ?? user.PhoneNumber;
         
-        //GetProfile
+        user.UserName = user.Email; 
+
+        var result = await userManager.UpdateAsync(user);
+
+        if (!result.Succeeded)
+        {
+            var errors = result.Errors.Select(e => e.Description);
+            return BadRequest(new { Errors = errors });
+        }
+
+        logger.LogInformation($"Профиль пользователя {user.Email} обновлён");
+
+        return Ok();
+    }
+    
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetUserOrders()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized();
+        }
         
-        //GetUserOrders
+        var orders = await db.Orders
+            .Where(o => o.UserId == userId)
+            .Include(o => o.Product)              
+            .Select(o => new ProfileOrderDto
+            {
+                Code = o.Code,
+                Title = o.Product.Title,
+                CreatedAt = o.CreatedAt
+            })
+            .ToListAsync();
+
+        return Ok(orders);
     }
 }

@@ -1,57 +1,92 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RightLine.Api.Dtos;
+using RightLine.Api.Extensions;
+using RightLine.DataAccess;
 using RightLine.DataAccess.Models;
 
 namespace RightLine.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class MainController : ControllerBase
+public class MainController(
+    AppDbContext db,
+    ILogger<MainController> logger,
+    UserManager<User> userManager
+    ) : ControllerBase
 {
-    // private readonly IWebHostEnvironment _env;
-    // private readonly ApplicationDbContext _context;
-    //
-    // public ProductController(IWebHostEnvironment env, ApplicationDbContext context)
-    // {
-    //     _env = env;
-    //     _context = context;
-    // }
-    //
-    // [HttpPost("upload")]
-    // public async Task<IActionResult> Upload([FromForm] ProductDto productDto, [FromForm] IFormFile imageFile)
-    // {
-    //     if (imageFile == null || imageFile.Length == 0)
-    //         return BadRequest("Image file is required.");
-    //
-    //     var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "images");
-    //     Directory.CreateDirectory(uploadDir); // Если папки нет — создаем
-    //
-    //     var uniqueName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-    //     var filePath = Path.Combine(uploadDir, uniqueName);
-    //
-    //     using (var stream = new FileStream(filePath, FileMode.Create))
-    //     {
-    //         await imageFile.CopyToAsync(stream);
-    //     }
-    //
-    //     var imageUrl = $"/uploads/images/{uniqueName}";
-    //
-    //     var product = new Product
-    //     {
-    //         Title = productDto.Title,
-    //         Description = productDto.Description,
-    //         ShortDescription = productDto.ShortDescription,
-    //         ImagePath = imageUrl
-    //     };
-    //
-    //     _context.Products.Add(product);
-    //     await _context.SaveChangesAsync();
-    //
-    //     return Ok(product);
-    // }
+    [HttpGet]
+    public async Task<IActionResult> GetAllProducts(CancellationToken ct)
+    {
+        var products = await db.Products
+            .ToListAsync();
+
+        if (!products.Any())
+        {
+            return NotFound("Продукты отсутствуют");
+        }
+        
+        return Ok(products);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetDetails([FromQuery] int productId, CancellationToken ct)
+    {
+        var product = await db.Products.FindAsync(productId, ct);
+
+        if (product == null)
+        {
+            return NotFound($"Продукт {productId} не найден");
+        }
+
+        var dto = new ProductDto
+        {
+            Title = product.Title,
+            Description = product.Description,
+            Idea = product.Idea,
+            ImagePath = product.ImagePath,
+        };
+        
+        return Ok(dto);
+    }
     
-    //GetAllProducts
-    
-    //GetDetails
-    
-    //MakingOrder
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> CreateOrder([FromQuery] int productId, CancellationToken ct)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var user = await userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var product = await db.Products.FindAsync(productId , ct);
+        if (product == null)
+        {
+            return NotFound("Продукт не найден");
+        }
+
+        var order = new Order
+        {
+            Code = OrderCodeGenerator.GenerateOrderCode(),
+            CreatedAt = DateTime.UtcNow,
+            UserId = user.Id,
+            ProductId = product.Id
+        };
+
+        db.Orders.Add(order);
+        await db.SaveChangesAsync(ct);
+
+        return Ok();
+    }
+
 }

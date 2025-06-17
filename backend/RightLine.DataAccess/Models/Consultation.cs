@@ -9,7 +9,7 @@ public class Consultation
     [Required]
     public string Message { get; set; } = String.Empty;
     [Required]
-    public DateTime CreateAt { get; set; }
+    public DateTime CreatedAt { get; set; }
     public bool IsDone { get; set; } = false;
     
     public string UserId { get; set; }
