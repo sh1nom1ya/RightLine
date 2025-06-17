@@ -1,0 +1,50 @@
+﻿version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: RightLine.Api/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - rightline-net
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=rtln;Username=postgres;Password=7169
+    depends_on:
+      - postgres
+
+#  frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    ports:
+#      - "3000:80"
+#    networks:
+#      - rightline-net
+#    depends_on:
+#      - backend
+#    environment:
+#      - REACT_APP_API_URL=http://localhost:8080
+
+  postgres:
+    container_name: rtln
+    image: postgres:14.16-alpine3.21
+    environment:
+      POSTGRES_DB: rtln
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 7169
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - rightline-net
+
+volumes:
+  postgres-data:
+
+networks:
+  rightline-net:
+    driver: bridge
