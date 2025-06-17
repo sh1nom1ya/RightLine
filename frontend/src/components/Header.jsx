@@ -9,7 +9,7 @@ const Header = () => {
         <header className="header">
             <nav>
                 <Link to="/product">Продукты</Link>
-                <Link to="/">Консультации</Link>
+                <Link to="/consultations">Консультации</Link>
             </nav>
             <img src={logo} alt="Right Line" className="logo" />
             <img src={profileIcon} alt="Профиль" className="profile" />
