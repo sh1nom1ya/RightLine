@@ -11,7 +11,7 @@ using RightLine.DataAccess.Models;
 namespace RightLine.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]/[action]")]
 public class MainController(
     AppDbContext db,
     ILogger<MainController> logger,
