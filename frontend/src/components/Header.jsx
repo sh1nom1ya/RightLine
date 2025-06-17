@@ -11,8 +11,12 @@ const Header = () => {
                 <Link to="/product">Продукты</Link>
                 <Link to="/consultations">Консультации</Link>
             </nav>
-            <img src={logo} alt="Right Line" className="logo" />
-            <img src={profileIcon} alt="Профиль" className="profile" />
+            <Link to="/">
+                <img src={logo} alt="Right Line" className="logo" />
+            </Link>
+            <Link to="/profile">
+                <img src={profileIcon} alt="Профиль" className="profile" />
+            </Link>
         </header>
     );
 };

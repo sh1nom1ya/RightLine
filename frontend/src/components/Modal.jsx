@@ -1,5 +1,6 @@
 import React from 'react';
 import './Modal.css';
+import closeImg from "../assets/close.png";
 
 const Modal = ({ isOpen, onClose, width = "500px", height = "auto", children }) => {
     if (!isOpen) return null;
@@ -11,7 +12,9 @@ const Modal = ({ isOpen, onClose, width = "500px", height = "auto", children }) 
     return (
         <div className="modal-overlay" onClick={handleOverlayClick}>
             <div className="modal-window" style={{ width, height }}>
-                <button className="close-button" onClick={onClose}>✖</button>
+                <button className="close-button" onClick={onClose}>
+                    <img src={closeImg} className="closeImg" alt="Close" />
+                </button>
                 {children}
             </div>
         </div>

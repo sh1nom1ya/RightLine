@@ -15,7 +15,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
 input, textarea {
@@ -23,12 +23,13 @@ input, textarea {
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;
-    font-family: inherit;
+    font-family: "Golos", sans-serif;
+    margin-bottom: 10px;
 }
 
 .preview-img {
     width: 100%;
-    max-height: 372px;
+    max-height: 330px;
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid #ccc;
@@ -37,7 +38,7 @@ input, textarea {
 .form-bottom {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
     margin-top: 10px;
 }
 

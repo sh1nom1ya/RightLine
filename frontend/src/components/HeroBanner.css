@@ -20,11 +20,11 @@
 }
 
 .hero-text button {
-    padding: 10px 20px;
+    padding: 15px 30px;
     border: none;
     background-color: #567EA2;
     color: white;
-    border-radius: 8px;
+    border-radius: 40px;
     font-weight: bold;
     cursor: pointer;
     transition: 300ms all ease;
@@ -37,4 +37,5 @@
 .hero-image {
     max-width: 500px;
     margin-top: 20px;
+    -webkit-user-drag: none;
 }

@@ -9,6 +9,7 @@
 
 .footer img {
     height: 30px;
+    -webkit-user-drag: none;
 }
 
 .footer p {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AdminConsultationsPage.css';
+import ConsultationCard from "../components/ConsultationCard";
 
 const mockApplications = [
     {
@@ -52,23 +53,16 @@ const AdminConsultationsPage = () => {
 
             <div className="cards-list">
                 {filtered.map(app => (
-                    <div
+                    <ConsultationCard
                         key={app.id}
-                        className={`consultation-card ${filter === 'active' ? 'active-card' : ''}`}
-                    >
-                        <h4>{app.name}</h4>
-                        <p>{app.message}</p>
-                        <div className="contact">
-                            <span>{app.phone}</span>
-                            <span>{app.email}</span>
-                        </div>
-                        {filter === 'active' && (
-                            <div className="action-buttons">
-                                <button className="accept">Принять</button>
-                                <button className="decline">Отклонить</button>
-                            </div>
-                        )}
-                    </div>
+                        name={app.name}
+                        message={app.message}
+                        phone={app.phone}
+                        email={app.email}
+                        showActions={filter === 'active'}
+                        onAccept={() => console.log(`Принята заявка ${app.id}`)}
+                        onDecline={() => console.log(`Отклонена заявка ${app.id}`)}
+                    />
                 ))}
             </div>
         </div>

@@ -1,0 +1,134 @@
+.profile-page {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+    background-color: #e6f3ff;
+    min-height: 680px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+}
+
+.profile-left,
+.profile-right {
+    background-color: #0094ff;
+    border-radius: 24px;
+    padding: 30px;
+    flex: 1;
+    max-width: 680px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-left{
+    max-width: 480px;
+}
+
+.profile-right{
+    max-width: 880px;
+}
+
+.profile-avatar {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    align-self: center;
+    -webkit-user-drag: none;
+}
+
+label {
+    font-weight: 500;
+}
+
+input {
+    background-color: #d6e5f4;
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 16px;
+    color: #0a0a0a;
+}
+
+.save-button {
+    margin-top: 20px;
+    padding: 18px 12px;
+    background-color: #567ea2;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+.save-button:hover {
+    background-color: #061388;
+}
+
+.profile-right h3 {
+    margin-top: 0;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 26px;
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.order-item {
+    background-color: #0094ff;
+    border-radius: 12px;
+    padding: 14px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid #ffffff33;
+}
+
+.order-id {
+    font-weight: bold;
+    color: #00ffcc;
+}
+
+.order-service {
+    flex: 1;
+    margin-left: 50px;
+    text-align: center;
+}
+
+.order-date {
+    font-style: italic;
+    color: #dbefff;
+}
+
+.order-meta {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px 14px;
+    background-color: #ffffff;
+    color: #0094ff;;
+    font-size: 14px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: 1px solid #ffffff33;
+    border-top: none;
+    margin-top: -10px;
+}
+
+.meta-left {
+    font-weight: 800;
+}
+
+.meta-right {
+    font-style: italic;
+    text-align: right;
+    white-space: nowrap;
+}

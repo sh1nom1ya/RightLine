@@ -1,0 +1,41 @@
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 130px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-input {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 14px;
+    min-width: 240px;
+    flex-grow: 1;
+}
+
+.sort-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.sort-buttons button,
+.create-button {
+    padding: 12px 20px;
+    border-radius: 10px;
+    background-color: #567EA2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.sort-buttons button:hover,
+.create-button:hover {
+    background-color: #061388;
+}
