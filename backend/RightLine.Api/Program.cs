@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using RightLine.Api.Jwt;
@@ -13,7 +14,10 @@ builder.Services.AddAutoMapper(typeof(Program));;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<AppDbContext>();
+// builder.Services.AddScoped<AppDbContext>();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
 
 builder.Services.AddIdentity<User, Role>(options =>
 {
@@ -64,9 +68,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-using var scope = app.Services.CreateScope();
-await using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-await dbContext.Database.EnsureCreatedAsync();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
+
+// using var scope = app.Services.CreateScope();
+// await using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+// await dbContext.Database.EnsureCreatedAsync();
 
 if (app.Environment.IsDevelopment())
 {
