@@ -19,7 +19,7 @@ public class MainController(
     ) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAllProducts(CancellationToken ct)
+    public async Task<IActionResult> GetProducts(CancellationToken ct)
     {
         var products = await db.Products
             .ToListAsync();
