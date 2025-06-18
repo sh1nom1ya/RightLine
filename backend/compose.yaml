@@ -1,24 +1,10 @@
-﻿version: '3.9'
+﻿version: "3.9"
 
 services:
-  backend: 
-    container_name: backend
-    build:
-      context: .
-      dockerfile: RightLine.Api/Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - rightline-net
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=rtln;Port=5432;Database=rtln;Username=postgres;Password=7169
-    depends_on:
-      - rtln
-
-  database:  
-    container_name: rtln
-    image: postgres:14.16-alpine3.21
+  db:
+    image: postgres:14-alpine
+    container_name: rtln-db
+    restart: unless-stopped
     environment:
       POSTGRES_DB: rtln
       POSTGRES_USER: postgres
@@ -27,6 +13,27 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - rightline-net
+
+  backend:
+    container_name: rightline-api
+    build:
+      context: .
+      dockerfile: RightLine.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Database: Host=rtln-db;Port=5432;Database=rtln;Username=postgres;Password=7169
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - rightline-net
 
@@ -36,3 +43,41 @@ volumes:
 networks:
   rightline-net:
     driver: bridge
+
+
+#services:
+#  backend: 
+#    container_name: backend
+#    build:
+#      context: .
+#      dockerfile: RightLine.Api/Dockerfile
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - rightline-net
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ConnectionStrings__DefaultConnection=Host=rtln;Port=5432;Database=rtln;Username=postgres;Password=7169
+#    depends_on:
+#      - rtln
+#
+#  rtln:  
+#    container_name: rtln
+#    image: postgres:14.16-alpine3.21
+#    environment:
+#      POSTGRES_DB: rtln
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 7169
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
+#    networks:
+#      - rightline-net
+#
+#volumes:
+#  postgres-data:
+#
+#networks:
+#  rightline-net:
+#    driver: bridge
