@@ -31,35 +31,37 @@ public class ProductsController(
     
     [HttpPost]
     [Authorize(Policy = "AdminPolicy")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> CreateProduct(
-        [FromForm] ProductDto productDto,
+        [FromForm] string title,
+        [FromForm] string? description,
+        [FromForm] string? shortDescription,
+        [FromForm] string? idea,
         [FromForm] IFormFile? imageFile,
         CancellationToken ct)
     {
         string? imageUrl = null;
 
-        if (imageFile != null && imageFile.Length > 0)
+        if (imageFile is { Length: > 0 })
         {
             var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Images");
-            Directory.CreateDirectory(uploadDir); 
+            Directory.CreateDirectory(uploadDir);
 
             var uniqueName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
             var filePath = Path.Combine(uploadDir, uniqueName);
 
-            await using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(stream, ct);
-            }
+            await using var stream = new FileStream(filePath, FileMode.Create);
+            await imageFile.CopyToAsync(stream, ct);
 
             imageUrl = $"/Uploads/Images/{uniqueName}";
         }
 
         var product = new Product
         {
-            Title = productDto.Title,
-            Description = productDto.Description,
-            ShortDescription = productDto.ShortDescription,
-            Idea = productDto.Idea,
+            Title = title,
+            Description = description,
+            ShortDescription = shortDescription,
+            Idea = idea,
             ImagePath = imageUrl
         };
 
@@ -68,9 +70,11 @@ public class ProductsController(
 
         return Ok(product);
     }
+
     
     [HttpPut]
     [Authorize(Policy = "AdminPolicy")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> UpdateProduct(
         [FromQuery] int productId,
         [FromForm] ProductDto productDto,

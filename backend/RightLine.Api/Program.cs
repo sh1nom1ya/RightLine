@@ -81,7 +81,10 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("./v1/swagger.json", "My API V1");
+    });
 }
 
 var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Images");
