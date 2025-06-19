@@ -31,3 +31,9 @@
 .request-form button:hover {
     background-color: #061388;
 }
+
+
+.form-status{
+    margin-top: 20px;
+    text-align: center;
+}

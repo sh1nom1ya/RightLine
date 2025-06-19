@@ -1,6 +1,10 @@
+using System.Security.Claims;
+using DefaultNamespace;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RightLine.Api.Dtos;
 using RightLine.DataAccess;
 using RightLine.DataAccess.Models;
 
@@ -9,6 +13,7 @@ namespace RightLine.Api.Controllers;
 [ApiController]
 [Route("[controller]/[action]")]
 public class ConsultationsController(
+    UserManager<User> userManager,
     ILogger<ConsultationsController> logger,
     AppDbContext db
     ) : Controller
@@ -18,9 +23,18 @@ public class ConsultationsController(
     public async Task<IActionResult> GetDoneConsultations(CancellationToken ct)
     {
         var consultaions = await db.Consultations
+            .Include(c => c.User)
             .Where(c => c.IsDone == true)
+            .Select(c => new ConsultationDto
+            {
+                Id = c.Id,
+                Message = c.Message,
+                FirstName = c.User.FirstName,
+                LastName = c.User.LastName,
+                PhoneNumber = c.User.PhoneNumber,
+                Email = c.User.Email,
+            })
             .ToListAsync(ct);
-
         if (consultaions.Count == 0)
         {
             return NotFound("Успешно пройденных консультаций нет");
@@ -34,7 +48,17 @@ public class ConsultationsController(
     public async Task<IActionResult> GetActiveConsultations(CancellationToken ct)
     {
         var consultaions = await db.Consultations
+            .Include(c => c.User)
             .Where(c => c.IsDone == false)
+            .Select(c => new ConsultationDto
+            { 
+                Id = c.Id,
+                Message = c.Message,
+                FirstName = c.User.FirstName,
+                LastName = c.User.LastName,
+                PhoneNumber = c.User.PhoneNumber,
+                Email = c.User.Email,
+            })
             .ToListAsync(ct);
 
         if (consultaions.Count == 0)
@@ -85,6 +109,30 @@ public class ConsultationsController(
         logger.LogInformation($"Консультация {consultation.Id} для {consultation.UserId} отклонена");
 
         return Ok();
+    }
+    
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> CreateConsultation([FromBody] CreateConsultationDto dto, CancellationToken ct)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var consultation = new Consultation
+        {
+            Message = dto.Message,
+            CreatedAt = DateTime.UtcNow,
+            UserId = userId,
+            IsDone = false
+        };
+
+        db.Consultations.Add(consultation);
+        await db.SaveChangesAsync(ct);
+
+        return Ok("Ваша заявка отправлена на рассмотрение");
     }
 }
     

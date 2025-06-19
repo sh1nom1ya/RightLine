@@ -18,7 +18,7 @@
     color: white;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
 }
 
 .profile-left{
@@ -132,3 +132,19 @@ input {
     text-align: right;
     white-space: nowrap;
 }
+
+.logout{
+    background-color: #ffffff32;
+    width: fit-content;
+    padding: 5px;
+    margin-left: auto;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.logout:hover{
+    background-color: #0094ff;
+}
+
