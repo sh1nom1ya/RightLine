@@ -31,15 +31,18 @@ public class AccountsController(
         }
 
         var user = mapper.Map<User>(userRegistrationDto);
-        var result = await userManager.CreateAsync(user, userRegistrationDto.Password);
-
-        if (!result.Succeeded)
+        if (userRegistrationDto.Password != null)
         {
-            var errors = result.Errors.Select(e => e.Description);
+            var result = await userManager.CreateAsync(user, userRegistrationDto.Password);
 
-            logger.LogWarning($"Пользователь {userRegistrationDto.Email} не зарегестрирован");
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description);
 
-            return BadRequest(new RegistrationResponseDto { Errors = errors });
+                logger.LogWarning($"Пользователь {userRegistrationDto.Email} не зарегестрирован");
+
+                return BadRequest(new RegistrationResponseDto { Errors = errors });
+            }
         }
 
         await userManager.AddToRoleAsync(user, "User");
