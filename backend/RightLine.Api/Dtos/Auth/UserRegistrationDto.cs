@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RightLine.Api.Dtos;
+namespace RightLine.Api.Dtos.Auth;
 
 public class UserRegistrationDto
 {
@@ -14,6 +14,7 @@ public class UserRegistrationDto
     public string? Email { get; set; }
     [Required]
     public string? Password { get; set; }
+
     [Required]
-    public string? ConfirmPassword { get; set; } = null;
+    public bool ConfirmPassword { get; set; } = true;
 }

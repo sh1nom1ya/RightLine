@@ -10,8 +10,9 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<UserRegistrationDto, User>()
-            .ForMember(u => u.UserName, options => options
-                .MapFrom(x => x.Email));
+            .ForMember(u => u.UserName, opt => opt.MapFrom(src => src.Email))
+            .ForMember(u => u.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber));
+
         
         CreateMap<User, ProfileDto>();
     }

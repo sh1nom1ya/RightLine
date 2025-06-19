@@ -100,7 +100,6 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Uploads/Images"
 });
 
-app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
