@@ -19,7 +19,7 @@ const EditForm = ({ data = {}, onSave }) => {
                 description: data.description || '',
                 extended: data.extended || '',
                 important: data.important || '',
-                imageFile: null, // новый файл пока не выбран
+                imageFile: null, 
                 imagePreview: data.image || '',
             }));
         }

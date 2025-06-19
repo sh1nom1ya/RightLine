@@ -148,4 +148,25 @@ public class ProductsController(
 
         return Ok(productId);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetDetails([FromQuery] int productId, CancellationToken ct)
+    {
+        var product = await db.Products.FindAsync(productId, ct);
+
+        if (product == null)
+        {
+            return NotFound($"Продукт {productId} не найден");
+        }
+
+        var dto = new ProductDto
+        {
+            Title = product.Title,
+            Description = product.Description,
+            Idea = product.Idea,
+            ImagePath = product.ImagePath,
+        };
+        
+        return Ok(dto);
+    }
 }

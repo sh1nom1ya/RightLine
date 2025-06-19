@@ -3,14 +3,22 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from "../assets/logo.png";
 import profileIcon from "../assets/profile.png";
+import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
+    const { isAuthenticated, roles } = useAuth();
+    const isAdmin = roles.includes('Admin');
+
     return (
         <header className="header">
             <div className="nav-block">
                 <nav>
-                    <Link to="/product">Продукты</Link>
-                    <Link to="/consultations">Консультации</Link>
+                    {isAdmin && (
+                        <>
+                            <Link to="/product">Продукты</Link>
+                            <Link to="/consultations">Консультации</Link>
+                        </>
+                    )}
                 </nav>
             </div>
 
@@ -21,12 +29,11 @@ const Header = () => {
             </div>
 
             <div className="profile-block">
-                <Link to="/profile">
+                <Link to={isAuthenticated ? "/profile" : "/login"}>
                     <img src={profileIcon} alt="Профиль" className="profile" />
                 </Link>
             </div>
         </header>
-
     );
 };
 

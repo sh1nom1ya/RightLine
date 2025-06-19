@@ -18,40 +18,19 @@ public class MainController(
     UserManager<User> userManager
     ) : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetProducts(CancellationToken ct)
-    {
-        var products = await db.Products
-            .ToListAsync();
-
-        if (!products.Any())
-        {
-            return NotFound("Продукты отсутствуют");
-        }
-        
-        return Ok(products);
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> GetDetails([FromQuery] int productId, CancellationToken ct)
-    {
-        var product = await db.Products.FindAsync(productId, ct);
-
-        if (product == null)
-        {
-            return NotFound($"Продукт {productId} не найден");
-        }
-
-        var dto = new ProductDto
-        {
-            Title = product.Title,
-            Description = product.Description,
-            Idea = product.Idea,
-            ImagePath = product.ImagePath,
-        };
-        
-        return Ok(dto);
-    }
+    // [HttpGet]
+    // public async Task<IActionResult> GetProducts(CancellationToken ct)
+    // {
+    //     var products = await db.Products
+    //         .ToListAsync();
+    //
+    //     if (!products.Any())
+    //     {
+    //         return NotFound("Продукты отсутствуют");
+    //     }
+    //     
+    //     return Ok(products);
+    // }
     
     [HttpPost]
     [Authorize]
@@ -88,5 +67,4 @@ public class MainController(
 
         return Ok();
     }
-
 }
